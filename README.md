@@ -4,7 +4,7 @@ Adds stamps relations to mongoid models.
 
 ## Version Support
 
-Mongoid 5.x
+Mongoid 5.x, 6.x
 
 ## Installation
 
@@ -45,7 +45,7 @@ Or install it yourself as:
   pòst = Post.create
   post.created_by # <User _id: 57305c268675c32e1c70a17e >
   post.updated_by # nil
-  
+
   post.title = 'title'
   post.save
   post.updated_by # <User _id: 57305c268675c32e1c70a17e >

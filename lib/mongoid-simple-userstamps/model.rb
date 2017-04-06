@@ -5,8 +5,8 @@ module Mongoid
   module Userstamps
     module Model
       def self.included(base)
-        base.send(:belongs_to, :created_by, {polymorphic: true})
-        base.send(:belongs_to, :updated_by, {polymorphic: true})
+        base.send(:belongs_to, :created_by, polymorphic: true, optional: true)
+        base.send(:belongs_to, :updated_by, polymorphic: true, optional: true)
 
         base.send(:before_create) do
           if Mongoid::Userstamps::Config.current && !self.created_by
