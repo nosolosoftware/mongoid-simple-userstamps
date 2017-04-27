@@ -4,7 +4,10 @@ Adds stamps relations to mongoid models.
 
 ## Version Support
 
-Mongoid 5.x, 6.x
+| mongoid | mongoid-simple-userstamps |
+| ------- | ------------------------- |
+| 6.x     | 2.0                       |
+| 5.x     | 1.2                       |
 
 ## Installation
 
