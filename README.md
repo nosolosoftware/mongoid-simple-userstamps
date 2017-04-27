@@ -60,6 +60,7 @@ Or install it yourself as:
 
 ```ruby
   class ApplicationController < ActionController::Base
+    before_action :authenticate!
     before_action :define_userstamps_current
 
     protected
@@ -68,6 +69,16 @@ Or install it yourself as:
       Mongoid::Userstamps::Config.set_current(current_user)
     end
   end
+```
+
+### Warden
+
+* Define current user in [warden callback](https://github.com/hassox/warden/wiki/Callbacks)
+
+```ruby
+Warden::Manager.after_set_user do |user, auth, opts|
+  Mongoid::Userstamps::Config.set_current(record)
+end
 ```
 
 ## Contributing
