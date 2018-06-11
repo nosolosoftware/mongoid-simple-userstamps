@@ -2,16 +2,9 @@
 
 Adds stamps relations to mongoid models.
 
-```diff
-- Not Thread-safe !!
-```
-
 ## Version Support
 
-| mongoid | mongoid-simple-userstamps |
-| ------- | ------------------------- |
-| 6.x     | 2.0                       |
-| 5.x     | 1.2                       |
+`5.x, 6.x and 7.x`
 
 ## Installation
 
@@ -29,14 +22,12 @@ Or install it yourself as:
 
 ## Usage
 
-* Include `Mongoid::Userstamps::User` in your 'User' model.
-* Include `Mongoid::Userstamps::Model` in your models you want user stamps.
-* Define current user.
+-   Include `Mongoid::Userstamps::Model` in your models you want user stamps.
+-   Define current user throught `Mongoid::Userstamps::User.current`.
 
 ```ruby
   class User
     include Mongoid::Document
-    include Mongoid::Userstamps::User
   end
 
   class Post
@@ -47,7 +38,7 @@ Or install it yourself as:
   end
 
   user = User.create
-  Mongoid::Userstamps::Config.set_current(user)
+  Mongoid::Userstamps::User.current = user
 
   pòst = Post.create
   post.created_by # <User _id: 57305c268675c32e1c70a17e >
@@ -60,7 +51,7 @@ Or install it yourself as:
 
 ### Rails
 
-* Define current user in your `application_controller.rb`
+-   Define current user in your `application_controller.rb`
 
 ```ruby
   class ApplicationController < ActionController::Base
@@ -70,7 +61,7 @@ Or install it yourself as:
     protected
 
     def define_userstamps_current
-      Mongoid::Userstamps::Config.set_current(current_user)
+      Mongoid::Userstamps::User.current = current_user
     end
   end
 ```
@@ -87,9 +78,9 @@ end
 
 ## Contributing
 
-1. Fork it (
-   http://github.com/<my-github-username>/mongoid-simple-userstamps/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+1.  Fork it (
+    <http://github.com/><my-github-username>/mongoid-simple-userstamps/fork )
+2.  Create your feature branch (`git checkout -b my-new-feature`)
+3.  Commit your changes (`git commit -am 'Add some feature'`)
+4.  Push to the branch (`git push origin my-new-feature`)
+5.  Create new Pull Request

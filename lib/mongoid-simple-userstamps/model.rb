@@ -5,18 +5,21 @@ module Mongoid
   module Userstamps
     module Model
       def self.included(base)
-        base.send(:belongs_to, :created_by, polymorphic: true, optional: true)
-        base.send(:belongs_to, :updated_by, polymorphic: true, optional: true)
-
-        base.send(:before_create) do
-          if Mongoid::Userstamps::Config.current && !self.created_by
-            self.created_by = Mongoid::Userstamps::Config.current
+        base.class_eval do
+          if Mongoid::VERSION.to_f < 6
+            belongs_to :created_by, polymorphic: true
+            belongs_to :updated_by, polymorphic: true
+          else
+            belongs_to :created_by, polymorphic: true, optional: true
+            belongs_to :updated_by, polymorphic: true, optional: true
           end
-        end
 
-        base.send(:before_update) do
-          if Mongoid::Userstamps::Config.current
-            self.updated_by = Mongoid::Userstamps::Config.current
+          before_create do
+            self.created_by = Mongoid::Userstamps::User.current unless created_by
+          end
+
+          before_update do
+            self.updated_by = Mongoid::Userstamps::User.current
           end
         end
       end
