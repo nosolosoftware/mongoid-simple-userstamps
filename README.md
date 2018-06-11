@@ -2,6 +2,10 @@
 
 Adds stamps relations to mongoid models.
 
+```diff
+- Not Thread-safe !!
+```
+
 ## Version Support
 
 | mongoid | mongoid-simple-userstamps |
