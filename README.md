@@ -72,7 +72,7 @@ Or install it yourself as:
 
 ```ruby
 Warden::Manager.after_set_user do |user, auth, opts|
-  Mongoid::Userstamps::Config.set_current(record)
+  Mongoid::Userstamps::User.current = record
 end
 ```
 
