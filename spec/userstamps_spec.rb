@@ -46,6 +46,15 @@ describe 'Mongoid::Userstamp' do
         post.save
         expect(post.updated_by).to eq(@user)
       end
+
+      it 'should not overwrite updated_by' do
+        user = User.create
+        post = Post.create
+        post.title = "title"
+        post.updated_by = user
+        post.save
+        expect(post.updated_by).to eq(user)
+      end
     end
 
     context 'when check thread safe' do

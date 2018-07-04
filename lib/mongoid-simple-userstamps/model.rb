@@ -19,7 +19,7 @@ module Mongoid
           end
 
           before_update do
-            self.updated_by = Mongoid::Userstamps::User.current
+            self.updated_by = Mongoid::Userstamps::User.current unless updated_by_id_changed?
           end
         end
       end
