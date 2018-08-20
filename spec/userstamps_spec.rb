@@ -42,18 +42,26 @@ describe 'Mongoid::Userstamp' do
     context 'when update Post' do
       it 'should save user stamps relations' do
         post = Post.create
-        post.title = "title"
-        post.save
+        post.update(title: 'title')
         expect(post.updated_by).to eq(@user)
       end
 
-      it 'should not overwrite updated_by' do
+      it 'should not overwrite updated_by when it changes' do
         user = User.create
         post = Post.create
-        post.title = "title"
-        post.updated_by = user
-        post.save
+        post.update(title: 'title', updated_by: user)
         expect(post.updated_by).to eq(user)
+      end
+
+      it 'should not overwrite updated_by when use skip_userstamps' do
+        user = User.create
+        post = Post.create(updated_by: user)
+        post.skip_userstamps.update(title: 'title')
+        expect(post.updated_by).to eq(user)
+
+        # after saved skip is removed
+        post.update(title: 'new_title')
+        expect(post.updated_by).to eq(@user)
       end
     end
 
