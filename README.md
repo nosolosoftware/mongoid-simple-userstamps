@@ -40,14 +40,34 @@ Or install it yourself as:
   user = User.create
   Mongoid::Userstamps::User.current = user
 
-  pòst = Post.create
-  post.created_by # <User _id: 57305c268675c32e1c70a17e >
+  post = Post.create
+  post.created_by # <User _id: 1 >
   post.updated_by # nil
 
-  post.title = 'title'
-  post.save
-  post.updated_by # <User _id: 57305c268675c32e1c70a17e >
+  post.update(title: 'title')
+  post.updated_by # <User _id: 1 >
+
+  # set manually
+  other_user = User.create
+  post.update(updated_by: other_user)
+  post.updated_by # <User _id: 2 >
+
+  # skip userstamps
+  post.skip_userstamps.update(title: 'new_title')
+  post.updated_by # <User _id: 2 >
 ```
+
+## Preservation of Manually-set Values
+
+* The `creator` is only set during the creation of new models (`before_create` callback).
+Mongoid::Userstamps will not overwrite the `creator` field if it already contains a value
+(i.e. was manually set.)
+
+* The `updater` is set each time the model is updated (`before_update` callback).
+Mongoid::Userstamps will not overwrite the `updater` field if it been modified since the last save,
+as per Mongoid's built-in "dirty tracking" feature.
+
+  > When the `updater` is the same and we need to preserve, we need to use `skip_userstamps` method.
 
 ### Rails
 
